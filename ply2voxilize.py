@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[2]:
+# In[1]:
 
 
 import numpy as np
@@ -9,7 +9,7 @@ import random
 from load_ply import load_ply
 
 
-# In[3]:
+# In[2]:
 
 
 def voxilize(np_pc):
@@ -24,7 +24,14 @@ def voxilize(np_pc):
         #xyzで一番並行距離が大きいのを求める
         if dist > max_dist:
             max_dist = dist
+            
+    for it in range(0,3):
 
+        # 最大値と最小値の距離を求める
+        min = np.amin(np_pc[:,it])
+        max = np.amax(np_pc[:,it])
+        dist = max-min
+        
         #中心座標を 0,0,0にセットする（原点が中心にくるようにする）
         np_pc[:,it] = np_pc[:,it] - dist/2 - min
 
@@ -32,7 +39,7 @@ def voxilize(np_pc):
         cls = 29
 
         #ボクセル一個当たりのサイズを求める
-        vox_sz = dist/(cls-1)
+        vox_sz = max_dist/(cls-1)
 
         #上で算出した値で各点を割る。これで各点は(-14, 14)の範囲の値になる
         np_pc[:,it] = np_pc[:,it]/vox_sz
@@ -62,7 +69,7 @@ def voxilize(np_pc):
     return np_vox
 
 
-# In[4]:
+# In[3]:
 
 
 def voxel_scatter(np_vox):

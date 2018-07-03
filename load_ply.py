@@ -11,7 +11,7 @@ import numpy as np
 
 
 def  load_ply(filename):
-    with open(filename, "r") as f: 
+    with open(filename, "r",encoding='utf-8') as f: 
         data = f.readlines()
         
     #３D座標のはじまりの位置を取得
